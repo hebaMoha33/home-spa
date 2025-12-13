@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function HeroImage() {
   return (
-    <section className="w-full px-4 py-10 flex justify-center">
+    <section className="w-full px-4 flex justify-center">
       <div className="
         relative w-full max-w-6xl 
         h-[380px] sm:h-[450px] md:h-[520px] 
@@ -56,8 +56,9 @@ export default function HeroImage() {
           className="
             absolute bottom-6 left-1/2 -translate-x-1/2 
             text-white/60 dark:text-white/50 
-            text-lg sm:text-2xl md:text-3xl 
-            font-extrabold tracking-wide whitespace-nowrap
+            text-base sm:text-2xl md:text-3xl 
+            font-extrabold tracking-wide 
+            text-center px-4 sm:px-0
             drop-shadow-xl
           "
         >

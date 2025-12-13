@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 
 export default function FloatingButtons() {
-  const whatsappNumber = "966500000000"; 
-  const phoneNumber = "tel:0500000000"; 
+  const whatsappNumber = "966548920707"; 
+  const phoneNumber = "tel:05548920707"; 
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pulse: any = {
@@ -63,7 +63,7 @@ export default function FloatingButtons() {
         transition={{ delay: 0.4 }}
         style={{
           background:
-            "linear-gradient(135deg, #FFD700 0%, #c66e04ff 100%)",
+            "linear-gradient(135deg, #FFD700 0%, #c66e04ff    100%)",
           borderRadius: "50%",
           width: "60px",
           height: "60px",

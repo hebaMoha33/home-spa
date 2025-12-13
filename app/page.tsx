@@ -24,15 +24,19 @@ import MapSection from "./components/MapSection";
 import FloatingButtons from "./components/FloatingButtons";
 // استيراد صحيح للفوتر المسمّى
 import { Footer } from "./components/Footer";
+import MarketingStrip from "./components/MarketingStrip";
+import WhyUs from "./components/WhyUs";
 
 
 export default function Home() {
   return (
     <main className="space-y-10 p-4">
       <Header />
+      <MarketingStrip />
       <HeroImage />
       <BookingForm />
       <Services />
+      <WhyUs />
       <Reviews />
       <MapSection />
       <FloatingButtons />

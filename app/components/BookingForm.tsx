@@ -16,22 +16,32 @@ export default function BookingForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("جاري الإرسال...");
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setStatus("جاري الإرسال...");
 
-    const res = await fetch("/api/book", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+  const res = await fetch("/api/book", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
 
-    const data = await res.json();
+  const data = await res.json();
+
+  if (data.redirect) {
+    // فتح واتساب إذا كان السيرفر أعطى رابط تحويل
+    window.open(data.redirect, "_blank");
+    setStatus("جارٍ تحويلك إلى واتساب...");
+  } else {
+    // إظهار رسالة نجاح أو خطأ
     setStatus(data.message);
+  }
 
-    if (data.success) setForm({ name: "", phone: "", email: "", message: "" });
-  };
-
+  if (data.success) {
+    // مسح الفورم بعد النجاح
+    setForm({ name: "", phone: "", email: "", message: "" });
+  }
+};
   return (
     <motion.section
       initial={{ opacity: 0, y: 50 }}

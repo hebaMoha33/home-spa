@@ -45,7 +45,7 @@ export default function CircularReviews() {
   };
 
   return (
-    <section className="py-12 px-4 bg-gray-50 flex flex-col items-center">
+    <section className=" px-4  flex flex-col items-center">
       <h2 className="text-3xl font-extrabold mb-8 text-center">آراء العملاء</h2>
 
       {/* Carousel */}
@@ -83,7 +83,10 @@ export default function CircularReviews() {
       {/* زر إضافة تعليق */}
       <button
         onClick={() => setShowForm(!showForm)}
-        className="mb-4 px-4 py-2 rounded-lg bg-green-500 text-white font-semibold shadow hover:bg-green-600 transition-all text-sm sm:text-base"
+        className="mb-4 px-4 py-2 rounded-lg bg-green-500 text-white font-semibold shadow hover:opacity-90 transition-all text-sm sm:text-base"
+       style={{
+    background: "linear-gradient(90deg, #0fe75eff 0%, #098778ff 100%)",
+  }}
       >
         أضف تعليقك
       </button>
@@ -139,7 +142,10 @@ export default function CircularReviews() {
           </label>
           <button
             type="submit"
-            className="w-full py-2 rounded-lg bg-amber-500 text-white font-semibold hover:bg-amber-600 transition-all text-sm"
+            className="w-full py-2 rounded-lg bg-amber-500 text-white font-semibold hover:opacity-90 transition-all text-sm"
+          style={{
+    background: "linear-gradient(90deg, #FFD700 0%, #c66e04ff  100%)",
+  }}
           >
             أرسل التعليق
           </button>
