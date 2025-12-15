@@ -9,7 +9,7 @@ export const metadata = {
     "مساج رجالي الرياض",
     "مساج في المنزل الرياض",
     "مساج علاجي",
-    "مساج استرخاء",
+    "05484207707",
     "سبا منزلي",
     "مساج رياضي الرياض",
   ],
@@ -34,9 +34,9 @@ export default function Home() {
       <Header />
       <MarketingStrip />
       <HeroImage />
-      <BookingForm />
       <Services />
       <WhyUs />
+      <BookingForm />
       <Reviews />
       <MapSection />
       <FloatingButtons />

@@ -1,33 +1,36 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
 
 export default function Services() {
   const items = [
     {
-      title: "مساج سويدي رجالي",
-      text: "جلسة تنشيط الدورة الدموية وإزالة التوتر",
-      image: "/gg.jpg",
+      title: "مساج سويدي (Swedish Massage)",
+      text: "يعتمد على حركات ناعمة وزيوت طبيعية لتخفيف التوتر مثالي لتحسين الدورة الدموية والاسترخاء الكامل",
+      image: "/siwidi.jpg",
     },
     {
-      title: "مساج علاجي رجالي",
-      text: "يعالج آلام العضلات المزمنة ويحسن الحركة",
-      image: "/СПОРТИВНЫЙ МАССАЖ.jpg",
+      title: "مساج فاخر VIP",
+      text: "تجربة فريدة تشمل استرخاء كامل وفخامة كل التفاصيل يخفف التوتر ويعيد الطاقة والنشاط لك",
+      image: "/hero3.jpg",
     },
     {
-      title: "مساج استرخائي رجالي",
-      text: "أجواء تساعد على صفاء الذهن والراحة",
-      image: "/Book Massage _ Scandinave Spa Old Montreal.jpg",
+      title: "مساج تايلندي (Thai Massage)",
+      text: "يعتمد على الضغط وتمتد العضلات لراحة كاملة للجسم يزيد المرونة ويخفف التوتر اليومي",
+      image: "/taylind.jpg",
     },
     {
-      title: "مساج عميق للعضلات",
-      text: "يخفف التوتر العميق ويزيد مرونة العضلات",
-      image: "/deep_muscle_massage.jpg",
+      title: "مساج أحجار ساخنة (Hot Stone Massage)",
+      text: "أحجار مدفأة توضع على نقاط معينة لراحة العضلات العميقة يساعد على التخلص من التوتر ويمنح استرخاء عميق",
+      image: "/ahjar.jpg",
     },
     {
-      title: "مساج الرأس والكتف",
-      text: "يساعد على الاسترخاء وتخفيف الصداع",
-      image: "/head_shoulder_massage.jpg",
+      title: "كاسات هواء (Cupping Therapy)",
+      text: "طريقة علاجية تعتمد على الشفط لتحفيز الدورة الدموية تساعد على تخفيف آلام العضلات وإزالة السموم",
+      image: "/kasat.jpg",
     },
   ];
 
@@ -37,39 +40,46 @@ export default function Services() {
         خدماتنا
       </h2>
 
-      {/* Carousel أفقي تلقائي */}
-      <div className="overflow-hidden">
-        <motion.div
-          className="flex gap-6"
-          animate={{ x: ["-50%", "0%"] }} // الحركة معكوسة الآن من اليسار إلى اليمين
-          transition={{
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 5, // سرعة الحركة
-            ease: "linear",
-          }}
-        >
-          {[...items, ...items].map((item, i) => (
-            <div
-              key={i}
-              className="min-w-[300px] md:min-w-[350px] flex-shrink-0 relative rounded-2xl overflow-hidden shadow-lg"
-            >
-              {/* الصورة */}
+      <Swiper
+        modules={[Autoplay]}
+        slidesPerView={1}           // خدمة واحدة في الجوال
+        spaceBetween={20}
+        loop={true}
+        autoplay={{
+          delay: 1500,             // كل 3 ثواني
+          disableOnInteraction: false,
+        }}
+        breakpoints={{
+          768: {
+            slidesPerView: 2,      // تابلت
+          },
+          1024: {
+            slidesPerView: 3,      // ديسكتوب
+          },
+        }}
+      >
+        {items.map((item, i) => (
+          <SwiperSlide key={i}>
+            <div className="relative rounded-2xl overflow-hidden shadow-lg">
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-48 md:h-60 object-cover"
+                className="w-full h-56 md:h-64 object-cover"
               />
 
-              {/* النص داخل الصورة على اليمين */}
-              <div className="absolute inset-0 flex flex-col justify-end p-5 text-right bg-gradient-to-t from-black/60 to-transparent">
-                <h3 className="text-xl md:text-2xl font-bold text-white">{item.title}</h3>
-                <p className="text-sm md:text-base text-white mt-1">{item.text}</p>
+              {/* النص داخل الصورة من اليمين */}
+              <div className="absolute inset-0 flex flex-col justify-end p-5 text-right bg-gradient-to-t from-black/70 to-transparent">
+                <h3 className="text-xl md:text-2xl font-bold text-white">
+                  {item.title}
+                </h3>
+                <p className="text-sm md:text-base text-white mt-1">
+                  {item.text}
+                </p>
               </div>
             </div>
-          ))}
-        </motion.div>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 }
