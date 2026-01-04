@@ -3,13 +3,16 @@
 import { motion } from "framer-motion";
 
 export default function FloatingButtons() {
-  const whatsappNumber = "966548920707"; 
-  const phoneNumber = "tel:05548920707"; 
+  const whatsappNumber = "966548920707";
+  const phoneNumber = "0548920707";
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const pulse: any = {
+  const pulse = {
     scale: [1, 1.08, 1],
-    transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut" as const,
+    },
   };
 
   return (
@@ -57,13 +60,13 @@ export default function FloatingButtons() {
 
       {/* زر الاتصال */}
       <motion.a
-        href={phoneNumber}
+        href={`tel:${phoneNumber}`}
         whileHover={{ scale: 1.15 }}
         animate={pulse}
         transition={{ delay: 0.4 }}
         style={{
           background:
-            "linear-gradient(135deg, #FFD700 0%, #c66e04ff    100%)",
+            "linear-gradient(135deg, #FFD700 0%, #c66e04ff 100%)",
           borderRadius: "50%",
           width: "60px",
           height: "60px",
