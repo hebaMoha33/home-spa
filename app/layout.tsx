@@ -26,10 +26,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl">
-      <head>
-        {/* Google Ads Tag */}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black`}
+      >
+        {/* ✅ Google Ads Global Tag */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17804158899"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17841696051"
           strategy="afterInteractive"
         />
 
@@ -38,14 +40,10 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'AW-17804158899');
+            gtag('config', 'AW-17841696051');
           `}
         </Script>
-      </head>
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black`}
-      >
         {children}
       </body>
     </html>
