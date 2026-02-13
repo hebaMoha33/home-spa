@@ -6,6 +6,19 @@ export default function FloatingButtons() {
   const whatsappNumber = "966548920707";
   const phoneNumber = "0548920707";
 
+  // ✅ دالة تتبع التحويل (Google Ads)
+  const trackConversion = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).gtag("event", "conversion", {
+        send_to: "AW-17841696051/sjCWCJv79fcbELPayrtC",
+        value: 1.0,
+        currency: "SAR",
+      });
+    }
+  };
+
   const pulse = {
     scale: [1, 1.08, 1],
     transition: {
@@ -27,11 +40,14 @@ export default function FloatingButtons() {
         zIndex: 1000,
       }}
     >
-      {/* زر واتساب */}
+      {/* ✅ زر واتساب (مع تتبع التحويل) */}
       <motion.a
         href={`https://wa.me/${whatsappNumber}`}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => {
+          trackConversion();
+        }}
         whileHover={{ scale: 1.15 }}
         animate={pulse}
         style={{
@@ -58,9 +74,12 @@ export default function FloatingButtons() {
         </svg>
       </motion.a>
 
-      {/* زر الاتصال */}
+      {/* ✅ زر الاتصال (مع تتبع التحويل) */}
       <motion.a
         href={`tel:${phoneNumber}`}
+        onClick={() => {
+          trackConversion();
+        }}
         whileHover={{ scale: 1.15 }}
         animate={pulse}
         transition={{ delay: 0.4 }}
