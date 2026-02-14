@@ -35,7 +35,7 @@ export default function Services() {
   ];
 
   return (
-    <section className="w-full py-12 px-4 bg-transparent">
+    <section id="services"  className="w-full py-12 px-4 bg-transparent">
       <h2 className="text-3xl font-extrabold text-gray-900 mb-10 text-center">
         خدماتنا
       </h2>

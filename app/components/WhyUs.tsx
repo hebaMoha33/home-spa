@@ -3,7 +3,7 @@ import React from "react";
 
 const WhyUs: React.FC = () => {
   return (
-    <section className="py-0 px-4 bg-transparent">
+    <section  id="about" className="py-0 px-4 bg-transparent">
       <div className="max-w-4xl mx-auto p-10 md:p-16 text-center 
                       bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl">
         {/* العنوان */}
