@@ -5,16 +5,26 @@ import { motion } from "framer-motion";
 export default function Header() {
   const phoneNumber = "0548920707";
 
-  // ✅ دالة تتبع التحويل (Google Ads)
-  const trackConversion = () => {
+  // ✅ تتبع التحويل الصحيح
+  const trackConversion = (url: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof window !== "undefined" && (window as any).gtag) {
+      const callback = () => {
+        window.location.href = url;
+      };
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).gtag("event", "conversion", {
         send_to: "AW-17841696051/sjCWCJv79fcbELPayrtC",
         value: 1.0,
         currency: "SAR",
+        event_callback: callback,
       });
+
+      // fallback احتياطي
+      setTimeout(callback, 800);
+    } else {
+      window.location.href = url;
     }
   };
 
@@ -25,14 +35,14 @@ export default function Header() {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="sticky top-4 z-50 w-full flex justify-center"
     >
-      {/* الحاوية الرئيسية للشريط */}
       <div className="w-full max-w-4xl bg-white/50 backdrop-blur-lg shadow-2xl rounded-full flex items-center justify-between px-6 py-3">
 
-        {/* ✅ زر الاتصال (مع تتبع التحويل) */}
+        {/* ✅ زر الاتصال مع تتبع صحيح */}
         <motion.a
           href={`tel:${phoneNumber}`}
-          onClick={() => {
-            trackConversion();
+          onClick={(e) => {
+            e.preventDefault();
+            trackConversion(`tel:${phoneNumber}`);
           }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -58,7 +68,7 @@ export default function Header() {
           هوم سبا خدمة مساج منزلي وفندقي
         </motion.div>
 
-        {/* اللوجو على اليمين */}
+        {/* اللوجو */}
         <div className="flex items-center">
           <img
             src="/aaa.png"
