@@ -6,25 +6,31 @@ export default function FloatingButtons() {
   const whatsappNumber = "966548920707";
   const phoneNumber = "0548920707";
 
-  // ✅ تتبع التحويل باستخدام البيانات الصحيحة للمجموعة 3
+  // ✅ دالة تتبع التحويل المصححة برمجياً
   const trackConversion = (url: string) => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
+    // تعريف النوع لتجنب تحذير "any"
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    const globalWindow = window as Window & { gtag?: Function };
+
+    if (typeof window !== "undefined" && globalWindow.gtag) {
       const callback = () => {
-        window.location.href = url;
+        if (url.startsWith("http")) {
+          window.open(url, "_blank");
+        } else {
+          window.location.href = url;
+        }
       };
 
-      // تم تحديث الـ ID والـ Label بناءً على آخر إعدادات ناجحة لكِ
-      (window as any).gtag("event", "conversion", {
-        send_to: "AW-17841696051/bQA1CKj0k50cELPayrtC",
+      globalWindow.gtag("event", "conversion", {
+        send_to: "AW-17841696051/N1BZCOS0j50cELPayrtC",
         value: 1.0,
         currency: "SAR",
         event_callback: callback,
       });
 
-      // fallback احتياطي في حال تأخر رد جوجل
-      setTimeout(callback, 800);
+      setTimeout(callback, 500);
     } else {
-      window.location.href = url;
+      window.open(url, "_blank");
     }
   };
 
@@ -49,11 +55,8 @@ export default function FloatingButtons() {
         zIndex: 1000,
       }}
     >
-      {/* ✅ زر واتساب - المجموعة 3 */}
+      {/* ✅ زر واتساب */}
       <motion.a
-        href={`https://wa.me/${whatsappNumber}`}
-        target="_blank"
-        rel="noopener noreferrer"
         onClick={(e) => {
           e.preventDefault();
           trackConversion(`https://wa.me/${whatsappNumber}`);
@@ -78,9 +81,8 @@ export default function FloatingButtons() {
         </svg>
       </motion.a>
 
-      {/* ✅ زر الاتصال - المجموعة 3 */}
+      {/* ✅ زر الاتصال */}
       <motion.a
-        href={`tel:${phoneNumber}`}
         onClick={(e) => {
           e.preventDefault();
           trackConversion(`tel:${phoneNumber}`);
