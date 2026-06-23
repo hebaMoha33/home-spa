@@ -32,6 +32,7 @@ export default function Home() {
   return (
     <main className="space-y-10 p-4">
       <Header />
+      <div className="h-[65px] sm:h-[70px]" />
       <MarketingStrip />
       <HeroImage />
       <Services />

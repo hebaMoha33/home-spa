@@ -3,9 +3,8 @@
 import { motion } from "framer-motion";
 
 export default function Header() {
-  const phoneNumber = "0548920707";
+  const phoneNumber = "+966548920707"; 
 
-  // ✅ تتبع التحويل الصحيح
   const trackConversion = (url: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof window !== "undefined" && (window as any).gtag) {
@@ -15,29 +14,56 @@ export default function Header() {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).gtag("event", "conversion", {
-        send_to: "AW-17841696051/sjCWCJv79fcbELPayrtC",
+        send_to: "AW-17841696051/KeXLCJe6mcQcELPayrtC",
         value: 1.0,
         currency: "SAR",
         event_callback: callback,
       });
 
-      // fallback احتياطي
-      setTimeout(callback, 800);
+      setTimeout(callback, 500);
     } else {
       window.location.href = url;
     }
   };
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <motion.header
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="sticky top-4 z-50 w-full flex justify-center"
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 py-2 sm:py-3"
+      style={{ direction: "rtl" }}
     >
-      <div className="w-full max-w-4xl bg-white/50 backdrop-blur-lg shadow-2xl rounded-full flex items-center justify-between px-6 py-3">
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-8">
+        
+        {/* 1. الطرف الأيمن: اللوجو */}
+        <div 
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+          className="flex items-center cursor-pointer shrink-0"
+        >
+          <img
+            src="/aaa.png"
+            alt="اللوجو"
+            className="w-11 h-11 sm:w-16 sm:h-16 object-contain" // تقليص حجم اللوجو في الجوال ليصبح نحيفاً
+          />
+        </div>
 
-        {/* ✅ زر الاتصال مع تتبع صحيح */}
+        {/* 2. المنتصف: خيارات التنقل (شغالة شاشات كبيرة وجوال في صف واحد نحيف) */}
+        <nav className="flex items-center gap-3 sm:gap-8 font-bold text-gray-600 text-[11px] sm:text-sm mx-2 overflow-x-auto no-scrollbar">
+          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-amber-600 whitespace-nowrap">الرئيسية</button>
+          <button onClick={() => scrollToSection('services')} className="hover:text-amber-600 whitespace-nowrap">خدماتنا</button>
+          <button onClick={() => scrollToSection('about')} className="hover:text-amber-600 whitespace-nowrap">لماذا نحن</button>
+          <button onClick={() => scrollToSection('booking')} className="text-amber-600 whitespace-nowrap font-black">احجز الآن</button>
+        </nav>
+
+        {/* 3. الطرف الأيسر: زر اتصل الآن */}
         <motion.a
           href={`tel:${phoneNumber}`}
           onClick={(e) => {
@@ -47,35 +73,16 @@ export default function Header() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="
-            px-4 py-2 sm:px-5 sm:py-2.5
-            font-semibold rounded-full shadow-lg
-            bg-gradient-to-r from-green-400 to-green-600
-            text-white text-xs sm:text-sm
-            hover:from-green-500 hover:to-green-700
+            px-3 py-2 sm:px-5 sm:py-2.5
+            font-bold rounded-md shadow-sm shrink-0
+            bg-gradient-to-r from-green-500 to-green-600
+            text-white text-[11px] sm:text-sm
+            hover:from-green-600 hover:to-green-700
             transition-all duration-300
           "
         >
           اتصل الآن
         </motion.a>
-
-        {/* النص في المنتصف */}
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-center text-gray-900 font-bold text-sm sm:text-base md:text-lg flex-1 mx-4"
-        >
-          هوم سبا خدمة مساج منزلي وفندقي
-        </motion.div>
-
-        {/* اللوجو */}
-        <div className="flex items-center">
-          <img
-            src="/aaa.png"
-            alt="Logo"
-            className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
-          />
-        </div>
 
       </div>
     </motion.header>

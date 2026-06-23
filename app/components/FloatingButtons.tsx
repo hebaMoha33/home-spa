@@ -6,23 +6,20 @@ export default function FloatingButtons() {
   const whatsappNumber = "966548920707";
   const phoneNumber = "0548920707";
 
-  // ✅ دالة تتبع التحويل المصححة برمجياً
-  const trackConversion = (url: string) => {
-    // تعريف النوع لتجنب تحذير "any"
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    const globalWindow = window as Window & { gtag?: Function };
+  const trackConversion = (url: string, sendTo: string) => {
+    const globalWindow = window as Window & { gtag?: (event: string, action: string, data: { send_to: string; value: number; currency: string; event_callback: () => void }) => void };
+
+    const callback = () => {
+      if (url.startsWith("http")) {
+        window.open(url, "_blank");
+      } else {
+        window.location.href = url;
+      }
+    };
 
     if (typeof window !== "undefined" && globalWindow.gtag) {
-      const callback = () => {
-        if (url.startsWith("http")) {
-          window.open(url, "_blank");
-        } else {
-          window.location.href = url;
-        }
-      };
-
       globalWindow.gtag("event", "conversion", {
-        send_to: "AW-17841696051/N1BZCOS0j50cELPayrtC",
+        send_to: sendTo,
         value: 1.0,
         currency: "SAR",
         event_callback: callback,
@@ -30,7 +27,7 @@ export default function FloatingButtons() {
 
       setTimeout(callback, 500);
     } else {
-      window.open(url, "_blank");
+      callback();
     }
   };
 
@@ -55,16 +52,20 @@ export default function FloatingButtons() {
         zIndex: 1000,
       }}
     >
-      {/* ✅ زر واتساب */}
+      {/* واتساب */}
       <motion.a
         onClick={(e) => {
           e.preventDefault();
-          trackConversion(`https://wa.me/${whatsappNumber}`);
+
+          trackConversion(
+            `https://wa.me/${whatsappNumber}`,
+            "AW-17841696051/zpGuCMTQpcQcELPayrtC"
+          );
         }}
         whileHover={{ scale: 1.15 }}
         animate={pulse}
         style={{
-          background: "linear-gradient(135deg, #0fe75eff 0%, #098778ff 100%)",
+          background: "linear-gradient(135deg, #0fe75e 0%, #098778 100%)",
           borderRadius: "50%",
           width: "60px",
           height: "60px",
@@ -81,17 +82,21 @@ export default function FloatingButtons() {
         </svg>
       </motion.a>
 
-      {/* ✅ زر الاتصال */}
+      {/* اتصال */}
       <motion.a
         onClick={(e) => {
           e.preventDefault();
-          trackConversion(`tel:${phoneNumber}`);
+
+          trackConversion(
+            `tel:${phoneNumber}`,
+            "AW-17841696051/KeXLCJe6mcQcELPayrtC"
+          );
         }}
         whileHover={{ scale: 1.15 }}
         animate={pulse}
         transition={{ delay: 0.4 }}
         style={{
-          background: "linear-gradient(135deg, #FFD700 0%, #c66e04ff 100%)",
+          background: "linear-gradient(135deg, #FFD700 0%, #c66e04 100%)",
           borderRadius: "50%",
           width: "60px",
           height: "60px",
