@@ -1,23 +1,35 @@
+
 "use client";
 
 import { motion } from "framer-motion";
 
 export default function FloatingButtons() {
-  const whatsappNumber = "966548920707";
-  const phoneNumber = "0548920707";
+  const whatsappNumber = "966549038626";
+  const phoneNumber = "+966549038626";
 
   const trackConversion = (url: string, sendTo: string) => {
-    const globalWindow = window as Window & { gtag?: (event: string, action: string, data: { send_to: string; value: number; currency: string; event_callback: () => void }) => void };
+    let opened = false;
 
     const callback = () => {
+      if (opened) return;
+      opened = true;
+
       if (url.startsWith("http")) {
-        window.open(url, "_blank");
+        window.open(url, "_blank", "noopener,noreferrer");
       } else {
         window.location.href = url;
       }
     };
 
-    if (typeof window !== "undefined" && globalWindow.gtag) {
+    const globalWindow = window as Window & {
+      gtag?: (
+        command: string,
+        action: string,
+        data: Record<string, unknown>
+      ) => void;
+    };
+
+    if (globalWindow.gtag) {
       globalWindow.gtag("event", "conversion", {
         send_to: sendTo,
         value: 1.0,
@@ -54,7 +66,19 @@ export default function FloatingButtons() {
     >
       {/* واتساب */}
       <motion.a
+        href={`https://wa.me/${whatsappNumber}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="تواصل معنا عبر واتساب"
         onClick={(e) => {
+          if (
+            e.button !== 0 ||
+            e.metaKey ||
+            e.ctrlKey ||
+            e.shiftKey ||
+            e.altKey
+          ) return;
+
           e.preventDefault();
 
           trackConversion(
@@ -65,7 +89,8 @@ export default function FloatingButtons() {
         whileHover={{ scale: 1.15 }}
         animate={pulse}
         style={{
-          background: "linear-gradient(135deg, #0fe75e 0%, #098778 100%)",
+          background:
+            "linear-gradient(135deg, #0fe75e 0%, #098778 100%)",
           borderRadius: "50%",
           width: "60px",
           height: "60px",
@@ -84,7 +109,17 @@ export default function FloatingButtons() {
 
       {/* اتصال */}
       <motion.a
+        href={`tel:${phoneNumber}`}
+        aria-label="اتصل بنا"
         onClick={(e) => {
+          if (
+            e.button !== 0 ||
+            e.metaKey ||
+            e.ctrlKey ||
+            e.shiftKey ||
+            e.altKey
+          ) return;
+
           e.preventDefault();
 
           trackConversion(
@@ -94,9 +129,9 @@ export default function FloatingButtons() {
         }}
         whileHover={{ scale: 1.15 }}
         animate={pulse}
-        transition={{ delay: 0.4 }}
         style={{
-          background: "linear-gradient(135deg, #FFD700 0%, #c66e04 100%)",
+          background:
+            "linear-gradient(135deg, #FFD700 0%, #c66e04 100%)",
           borderRadius: "50%",
           width: "60px",
           height: "60px",

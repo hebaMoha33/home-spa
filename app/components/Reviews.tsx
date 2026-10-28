@@ -12,45 +12,95 @@ interface Review {
 
 export default function CircularReviews() {
   const [reviews, setReviews] = useState<Review[]>([
-    { name: "خ★", email: "a@email.com", text: "خدمة ممتازة واحترافية عالية.", rating: 5 },
-    { name: "أب★", email: "b@email.com", text: "المساج ممتاز والتعامل راقي.", rating: 5 },
-    { name: "ن★", email: "c@email.com", text: "أفضل تجربة مساج جربتها.", rating: 5 },
+    {
+      name: "خ",
+      email: "a@email.com",
+      text: "خدمة ممتازة والتعامل احترافي ومرتب.",
+      rating: 5,
+    },
+    {
+      name: "أ",
+      email: "b@email.com",
+      text: "جلسة ممتازة ووصل الأخصائي في الموعد.",
+      rating: 5,
+    },
+    {
+      name: "ن",
+      email: "c@email.com",
+      text: "تجربة مريحة وخدمة منظمة.",
+      rating: 5,
+    },
   ]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showForm, setShowForm] = useState(false);
-  const [newReview, setNewReview] = useState({ name: "", email: "", text: "", rating: 5 });
+
+  const [newReview, setNewReview] = useState({
+    name: "",
+    email: "",
+    text: "",
+    rating: 5,
+  });
 
   // Auto-scroll كل 3 ثواني
   useEffect(() => {
+    if (reviews.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % reviews.length);
     }, 3000);
+
     return () => clearInterval(interval);
   }, [reviews.length]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setNewReview({ ...newReview, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+
+    setNewReview((prev) => ({
+      ...prev,
+      [name]: name === "rating" ? Number(value) : value,
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!newReview.email || !newReview.text || !newReview.name) {
       alert("الرجاء إدخال الاسم والبريد والنص!");
       return;
     }
-    setReviews([...reviews, newReview]);
-    setNewReview({ name: "", email: "", text: "", rating: 5 });
+
+    setReviews((prev) => [...prev, newReview]);
+
+    setNewReview({
+      name: "",
+      email: "",
+      text: "",
+      rating: 5,
+    });
+
     setShowForm(false);
   };
 
   return (
-    <section className=" px-4  flex flex-col items-center">
-      <h2 className="text-3xl font-extrabold mb-8 text-center">آراء العملاء</h2>
+    <section className="px-4 flex flex-col items-center">
+
+      <h2 className="text-3xl font-extrabold mb-2 text-center">
+        آراء العملاء
+      </h2>
+
+      <p className="text-gray-600 text-sm text-center mb-8">
+        تقييمات العملاء لخدمة Home Spa for Men في الرياض
+      </p>
 
       {/* Carousel */}
       <div className="relative w-64 h-64 mb-6 sm:w-72 sm:h-72">
-        <AnimatePresence>
+
+        <AnimatePresence mode="wait">
           {reviews.map((r, i) =>
             i === currentIndex ? (
               <motion.div
@@ -61,37 +111,47 @@ export default function CircularReviews() {
                 transition={{ duration: 0.6 }}
                 className="absolute inset-0 flex flex-col justify-center items-center bg-white rounded-full shadow-xl p-4 text-right"
               >
-                {/* صورة العميل */}
+
+                {/* رمز العميل */}
                 <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-lg font-bold mb-2">
                   {r.name[0]}
                 </div>
 
                 {/* النجوم */}
-                <div className="text-amber-400 mb-1">{'⭐'.repeat(r.rating)}</div>
+                <div className="text-amber-400 mb-1">
+                  {"⭐".repeat(r.rating)}
+                </div>
 
                 {/* النص */}
-                <p className="text-gray-800 text-center text-sm">{r.text}</p>
+                <p className="text-gray-800 text-center text-sm">
+                  {r.text}
+                </p>
 
                 {/* الاسم */}
-                <div className="mt-1 font-semibold text-sm">{r.name}</div>
+                <div className="mt-1 font-semibold text-sm">
+                  {r.name}
+                </div>
+
               </motion.div>
             ) : null
           )}
         </AnimatePresence>
+
       </div>
 
-      {/* زر إضافة تعليق */}
+      {/* زر إضافة تقييم */}
       <button
         onClick={() => setShowForm(!showForm)}
         className="mb-4 px-4 py-2 rounded-lg bg-green-500 text-white font-semibold shadow hover:opacity-90 transition-all text-sm sm:text-base"
-       style={{
-    background: "linear-gradient(90deg, #0fe75eff 0%, #098778ff 100%)",
-  }}
+        style={{
+          background:
+            "linear-gradient(90deg, #0fe75eff 0%, #098778ff 100%)",
+        }}
       >
-        أضف تعليقك
+        أضف تقييمك
       </button>
 
-      {/* فورم إضافة تعليق */}
+      {/* فورم إضافة تقييم */}
       {showForm && (
         <motion.form
           initial={{ opacity: 0, y: 20 }}
@@ -99,6 +159,7 @@ export default function CircularReviews() {
           className="w-full max-w-xs sm:max-w-sm bg-white p-4 sm:p-6 rounded-2xl shadow-lg text-right space-y-3"
           onSubmit={handleSubmit}
         >
+
           <input
             type="text"
             name="name"
@@ -108,6 +169,7 @@ export default function CircularReviews() {
             className="w-full p-2 border rounded-lg text-right text-sm"
             required
           />
+
           <input
             type="email"
             name="email"
@@ -117,16 +179,19 @@ export default function CircularReviews() {
             className="w-full p-2 border rounded-lg text-right text-sm"
             required
           />
+
           <textarea
             name="text"
             value={newReview.text}
             onChange={handleChange}
-            placeholder="اكتب تعليقك"
+            placeholder="اكتب تقييمك للخدمة"
             className="w-full p-2 border rounded-lg text-right text-sm"
             required
-          ></textarea>
+          />
+
           <label className="flex items-center justify-between text-sm">
             تقييم النجوم:
+
             <select
               name="rating"
               value={newReview.rating}
@@ -140,17 +205,21 @@ export default function CircularReviews() {
               ))}
             </select>
           </label>
+
           <button
             type="submit"
             className="w-full py-2 rounded-lg bg-amber-500 text-white font-semibold hover:opacity-90 transition-all text-sm"
-          style={{
-    background: "linear-gradient(90deg, #FFD700 0%, #c66e04ff  100%)",
-  }}
+            style={{
+              background:
+                "linear-gradient(90deg, #FFD700 0%, #c66e04ff 100%)",
+            }}
           >
-            أرسل التعليق
+            أرسل التقييم
           </button>
+
         </motion.form>
       )}
+
     </section>
   );
 }

@@ -49,8 +49,7 @@ ${message || "لا يوجد"}
     );
 
     // رسالة واتساب للعميل
-    const whatsappLink = `https://wa.me/966548920707?text=${encodeURIComponent(
-      `السلام عليكم، أريد تأكيد الحجز
+const whatsappLink = `https://wa.me/966549038626?text=${encodeURIComponent(      `السلام عليكم، أريد تأكيد الحجز
 
 الاسم: ${name}
 الجوال: ${phone}
